@@ -16,16 +16,14 @@ export const fetchRandomGreetingFailure = (error) => ({
   payload: error,
 });
 
-export const fetchRandomGreeting = () => {
-  return async (dispatch) => {
-    dispatch(fetchRandomGreetingRequest());
+export const fetchRandomGreeting = () => async (dispatch) => {
+  dispatch(fetchRandomGreetingRequest());
 
-    try {
-      const response = await fetch('http://127.0.0.1:3000/random_greeting');
-      const data = await response.json();
-      dispatch(fetchRandomGreetingSuccess(data.greeting));
-    } catch (error) {
-      dispatch(fetchRandomGreetingFailure(error.message));
-    }
-  };
+  try {
+    const response = await fetch('http://127.0.0.1:3000/random_greeting');
+    const data = await response.json();
+    dispatch(fetchRandomGreetingSuccess(data.greeting));
+  } catch (error) {
+    dispatch(fetchRandomGreetingFailure(error.message));
+  }
 };

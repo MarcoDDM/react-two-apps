@@ -13,7 +13,7 @@ const Greeting = () => {
         // Set the random greeting in the state
         setRandomGreeting(data.greeting);
       } catch (error) {
-        console.error('Error fetching random greeting:', error);
+        // console.error('Error fetching random greeting:', error);
       }
     };
 
