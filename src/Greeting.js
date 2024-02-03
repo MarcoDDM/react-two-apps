@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchRandomGreeting } from './redux/actions'; // Import your action
 
 const Greeting = () => {
-  const [randomGreeting, setRandomGreeting] = useState('');
+  const dispatch = useDispatch();
+  const randomGreeting = useSelector((state) => state.greetings.randomGreeting);
 
   useEffect(() => {
-    const fetchRandomGreeting = async () => {
+    const fetchRandomGreetingFromApi = async () => {
       try {
         // Fetch the random greeting from the Rails API
         const response = await fetch('http://127.0.0.1:3000/random_greeting');
         const data = await response.json();
 
-        // Set the random greeting in the state
-        setRandomGreeting(data.greeting);
+        // Dispatch the action to store the random greeting in the Redux store
+        dispatch(fetchRandomGreeting(data.greeting));
       } catch (error) {
-        // console.error('Error fetching random greeting:', error);
+        // Handle errors, e.g., console.error('Error fetching random greeting:', error);
       }
     };
 
     // Call the fetch function when the component mounts
-    fetchRandomGreeting();
-  }, []); // The empty dependency array ensures this effect runs only once when the component mounts
+    fetchRandomGreetingFromApi();
+  }, [dispatch]);
 
   return (
     <div>
